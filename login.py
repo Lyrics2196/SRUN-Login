@@ -208,9 +208,6 @@ def is_connected():
 
 
 def login():
-    is_available, is_online, _ = is_connected()
-    if not is_available or is_online:
-        raise Exception("You are already online or the network is not available!")
     ip = init_getip()
     token = get_token(ip)
     i, hmd5, chksum = do_complex_work(ip, token)
@@ -250,7 +247,4 @@ def login():
 if __name__ == "__main__":
     is_available, is_online, data = is_connected()
     if is_available and not is_online:
-        ip = init_getip()
-        token = get_token(ip)
-        i, hmd5, chksum = do_complex_work(ip, token)
         login()
