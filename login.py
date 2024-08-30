@@ -6,7 +6,7 @@ import hmac
 import hashlib
 import math
 import logging
-import sys
+import os
 
 username = ""
 password = ""
@@ -249,12 +249,15 @@ def login():
 if __name__ == "__main__":
     is_available, is_online, data = is_connected()
     # 配置日志
+    logfile = os.path.split(os.path.realpath(__file__))[0] + "\\login.log"
     logging.basicConfig(
-        filename=sys.path[0] + "\\login.log",
+        filename=logfile,
         level=logging.INFO,
         filemode="a",
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
+    if os.path.getsize(logfile) > 1024 * 1024 * 10:
+        os.remove(logfile)
     if not is_available:
         logging.error("网络不可用")
     elif is_available and is_online:
